@@ -71,8 +71,9 @@ namespace MoviesApp
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
             });
-            
-            app.UseMiddleware<ActorLogMiddleware>();
+
+            //app.UseRequestLog();
+            app.UseActorLog();
 
             app.UseEndpoints(endpoints =>
             {

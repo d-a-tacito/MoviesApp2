@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using MoviesApp.Controllers;
@@ -22,13 +24,15 @@ namespace MoviesApp.Middleware
 
         public async Task Invoke(HttpContext httpContext, ILogger<ActorLogMiddleware> logger)
         {
-            if (httpContext.Request.Path.Equals("/Actors"))
+            if (httpContext.Request.Path.StartsWithSegments("/Actors"))
             {
-                logger.LogInformation("OPENED ACTORS' LIST\n"+$"Request: {httpContext.Request.Path}  Method: {httpContext.Request.Method}");
-            }
-            else if (httpContext.Request.Path.Equals("/Actors/Index"))
-            {
-                logger.LogInformation("OPENED ACTORS' LIST INDEX\n"+$"Request: {httpContext.Request.Path}  Method: {httpContext.Request.Method}");
+                logger.LogInformation("OPENED CHAPTER WITH ACTORS\n"+$"Request: {httpContext.Request.Path}  Method: {httpContext.Request.Method}"+ 
+                                      $"Request.Body: {httpContext.Request.Body}\n" + 
+                                      $"\tConnection.Id: {httpContext.Connection.Id}\n" + 
+                                      $"\tCookies: {httpContext.Request.Cookies}\n" + 
+                                      $"\tProtocol: {httpContext.Request.Protocol}\n" + $"\tFeatures: {httpContext.Features.Revision}\n" +
+                                      $"\tHost: {httpContext.Request.Host}\n" + 
+                                      $"\tScheme: {httpContext.Request.Scheme}");
             }
             await _next(httpContext);
         }

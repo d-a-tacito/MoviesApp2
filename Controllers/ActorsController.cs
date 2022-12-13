@@ -107,6 +107,8 @@ namespace MoviesApp.Controllers
                     actor.Id = id;
                     _context.Update(actor);
                     _context.SaveChanges();
+                    _logger.LogInformation($"Actor has been updated!\nFirstName: {editModel.FirstName}\nLastName: {editModel.LastName}\nBirthdate: {editModel.BirthDate.ToShortDateString()}");
+
                 }
                 catch (DbUpdateException)
                 {

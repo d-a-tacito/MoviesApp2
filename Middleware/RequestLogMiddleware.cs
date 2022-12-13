@@ -16,7 +16,6 @@ namespace MoviesApp.Middleware
 
         public async Task Invoke(HttpContext httpContext, ILogger<RequestLogMiddleware> logger)
         {
-            //logger.LogTrace($"Request: {httpContext.Request.Path}  Method: {httpContext.Request.Method}");
             await _next(httpContext);
         }
     }
